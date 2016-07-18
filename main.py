@@ -11,8 +11,6 @@ import json
 clientID = os.environ.get('OAUTH_CLIENT_ID');
 clientSecret = os.environ.get('OAUTH_CLIENT_SECRET');
 authFragment = 'client_id={0}&client_secret={1}'.format(clientID, clientSecret);
-print(authFragment);
-quit();
 
 def get_gov_orgs():
     time.sleep(1)
