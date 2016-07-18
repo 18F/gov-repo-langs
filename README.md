@@ -4,6 +4,11 @@ A tool to fetch programming language metadata about government repos.  Will fetc
 metadata for US federal, state, county, local, and tribal government repos as
 listed at https://github.com/github/government.github.com.
 
+## Environment
+
+Expects two environment variables: `OAUTH_CLIENT_ID` and `OAUTH_CLIENT_SECRET`.
+To get these values, [create a Github developer application](https://github.com/settings/developers).
+
 ## Public domain
 
 This project is in the worldwide [public domain](LICENSE.md).   As stated in [CONTRIBUTING](CONTRIBUTING.md):
