@@ -1,3 +1,4 @@
+import os
 import sys
 import requests
 import base64
@@ -7,15 +8,21 @@ from functools import reduce
 
 import json
 
+clientID = os.environ.get('OAUTH_CLIENT_ID');
+clientSecret = os.environ.get('OAUTH_CLIENT_SECRET');
+authFragment = 'client_id={0}&client_secret={1}'.format(clientID, clientSecret);
+print(authFragment);
+quit();
+
 def get_gov_orgs():
     time.sleep(1)
-    return yaml.safe_load(base64.b64decode(requests.get('https://api.github.com/repos/github/government.github.com/contents/_data/governments.yml?client_id=57f183589001ede4cb28&client_secret=636b4be7290161f5cbd8427625466bf82d050e4b').json()['content']))
+    return yaml.safe_load(base64.b64decode(requests.get('https://api.github.com/repos/github/government.github.com/contents/_data/governments.yml?{0}'.format(authFragment)).json()['content']))
 
 def get_repos_in_org(org, page=1):
     if page == 1:
         print('Getting repos for {0}...'.format(org))
     time.sleep(1)
-    response = requests.get('https://api.github.com/orgs/{0}/repos?client_id=57f183589001ede4cb28&client_secret=636b4be7290161f5cbd8427625466bf82d050e4b&page={1}'.format(org, page))
+    response = requests.get('https://api.github.com/orgs/{0}/repos?{2}&page={1}'.format(org, page, authFragment))
 
     if page == 1:
         fullList = response.json()
@@ -36,7 +43,7 @@ def get_repos_in_org(org, page=1):
 def get_langs_in_repo(org, repo):
     print('  -> Getting languages for {0}/{1}'.format(org, repo))
     time.sleep(1)
-    return requests.get('https://api.github.com/repos/{0}/{1}/languages?client_id=57f183589001ede4cb28&client_secret=636b4be7290161f5cbd8427625466bf82d050e4b'.format(org, repo)).json()
+    return requests.get('https://api.github.com/repos/{0}/{1}/languages?{2}'.format(org, repo, authFragment)).json()
 
 entities = [
     { 'name': 'US federal government', 'sections': [ 'U.S. Federal', 'U.S. Military and Intelligence' ] },
